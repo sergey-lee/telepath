@@ -9,7 +9,7 @@
             <sparkle:shortVersionString>1.0</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
             <sparkle:hardwareRequirements>arm64</sparkle:hardwareRequirements>
-            <enclosure url="https://github.com/sergey-lee/telepath/releases/download/v1.0/Telepath-1.0.dmg" length="13139731" type="application/octet-stream" sparkle:edSignature="HT/rsNE9wJale8DiK2gulvCXZC9bL7sTMoQ2zTp7jtHT7wBIiHyTJXIpP0Lk92Rn3999LaTP4dujRMLB6B5RAw=="/>
+            <enclosure url="https://github.com/sergey-lee/telepath/releases/download/v1.0/Telepath-1.0.dmg" length="13140651" type="application/octet-stream" sparkle:edSignature="LPMZvpBpdb5u5ixqCkz5ZNgj48qbCtUZmOPxqrErljIV2HvsuOnkGzfZhpCyUQfz48kNHPvjZCAmtSvc+QjsBw=="/>
         </item>
     </channel>
 </rss>

@@ -2,7 +2,7 @@
 
 Telegram storage as a folder in Finder — for macOS 14 and later, Apple silicon.
 
-- **Site:** https://sergey-lee.github.io/telepath/
+- **Site:** https://telepath.alienminds.net/
 - **Download:** [latest release](https://github.com/sergey-lee/telepath/releases/latest)
 - **Support:** [issues](https://github.com/sergey-lee/telepath/issues)
 

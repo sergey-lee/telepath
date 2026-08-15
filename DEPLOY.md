@@ -14,9 +14,10 @@
    branch `main`, папка `/ (root)`. Через минуту сайт открывается по адресу
    `https://sergey-lee.github.io/telepath/`.
 
-3. Свой домен — когда будет: положить его в файл `CNAME` (одна строка,
-   например `telepath.app`), у регистратора добавить CNAME-запись на
-   `sergey-lee.github.io`, в настройках Pages включить Enforce HTTPS.
+3. Домен настроен: `telepath.alienminds.net`. В GoDaddy заведена запись
+   CNAME `telepath` → `sergey-lee.github.io`, адрес лежит в файле `CNAME`.
+   В Settings → Pages его надо указать в поле Custom domain и, когда GitHub
+   выпустит сертификат, включить Enforce HTTPS.
 
 ## При каждом выпуске
 
