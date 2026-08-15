@@ -3,6 +3,32 @@
     <channel>
         <title>Telepath</title>
         <item>
+            <title>1.0.9</title>
+            <pubDate>Sat, 15 Aug 2026 22:53:45 +0900</pubDate>
+            <sparkle:version>11</sparkle:version>
+            <sparkle:shortVersionString>1.0.9</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+            <sparkle:hardwareRequirements>arm64</sparkle:hardwareRequirements>
+            <description><![CDATA[<style>
+  body { font: 13px -apple-system, system-ui, sans-serif; color: #1d1d1f; margin: 0; }
+  h3 { font-size: 14px; margin: 0 0 8px; }
+  ul { margin: 0; padding-left: 18px; }
+  li { margin-bottom: 6px; }
+</style>
+<h3>Version 1.0.9</h3>
+<ul>
+  <li>Two Macs signed in to the same account now stay in sync: files stored,
+      moved or deleted on one appear, move and disappear on the other within
+      seconds — in the right folders.</li>
+  <li>Files sent from your phone or another device now land in the folder
+      they were addressed to, not in the generic Documents pile.</li>
+  <li>Changes made while a Mac was asleep catch up automatically when it
+      reconnects.</li>
+</ul>
+]]></description>
+            <enclosure url="https://github.com/sergey-lee/telepath/releases/download/v1.0.9/Telepath-1.0.9.dmg" length="13219853" type="application/octet-stream" sparkle:edSignature="j24w1lSAMgy/FiW+j7Lys1P6yU+atP0G0Z/7+AAcsBZWs28wOZRs7ng3p60G43M6FJtAPVbXBr8aag7aFHmFAg=="/>
+        </item>
+        <item>
             <title>1.0.8</title>
             <pubDate>Sat, 15 Aug 2026 21:32:21 +0900</pubDate>
             <sparkle:version>10</sparkle:version>
@@ -49,29 +75,6 @@
 </ul>
 ]]></description>
             <enclosure url="https://github.com/sergey-lee/telepath/releases/download/v1.0.7/Telepath-1.0.7.dmg" length="13171439" type="application/octet-stream" sparkle:edSignature="tqH1Z5hHWU4ovdXyj1Gk6V3Z7O3twlyMCv6WPJfMO4sAKjhtsTxCuyX6N80ObekwnuR28cYVByFlhG+CEoKOBg=="/>
-        </item>
-        <item>
-            <title>1.0.6</title>
-            <pubDate>Sat, 15 Aug 2026 14:49:40 +0900</pubDate>
-            <sparkle:version>8</sparkle:version>
-            <sparkle:shortVersionString>1.0.6</sparkle:shortVersionString>
-            <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
-            <sparkle:hardwareRequirements>arm64</sparkle:hardwareRequirements>
-            <description><![CDATA[<style>
-  body { font: 13px -apple-system, system-ui, sans-serif; color: #1d1d1f; margin: 0; }
-  h3 { font-size: 14px; margin: 0 0 8px; }
-  ul { margin: 0; padding-left: 18px; }
-  li { margin-bottom: 6px; }
-</style>
-<h3>Version 1.0.6</h3>
-<ul>
-  <li>Deleting many files at once is now much faster — messages are removed in
-      batches instead of one at a time.</li>
-  <li>When something is refused, Finder no longer keeps a stale view of the folder.</li>
-  <li>Lower memory use when working with large libraries.</li>
-</ul>
-]]></description>
-            <enclosure url="https://github.com/sergey-lee/telepath/releases/download/v1.0.6/Telepath-1.0.6.dmg" length="13160470" type="application/octet-stream" sparkle:edSignature="bBRmi2x4I+ZmsidFvYYiLUCD/sp/JlFsTSWkAnGhZRspHEElCthuuqHPKYPNAE26ZadKlTSImMwBJ3AWVdl/Bw=="/>
         </item>
     </channel>
 </rss>
