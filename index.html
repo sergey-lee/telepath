@@ -1,0 +1,539 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>body{margin:0}</style></head><body>
+<title>Telepath — Telegram storage in Finder</title>
+<style>
+  :root {
+    /* Нейтрали Apple: холодные, почти без цвета, чтобы синий облака был
+       единственным ярким пятном на странице */
+    --page: #FFFFFF;
+    --page-alt: #F5F5F7;
+    --ink: #1D1D1F;
+    --ink-2: #6E6E73;
+    --hairline: #D2D2D7;
+    --card: #FFFFFF;
+
+    /* Цвета взяты из иконки */
+    --blue: #1F6BFF;
+    --violet: #B86BFF;
+    --link: #0A62F0;
+    /* Синий для мелкого текста: акцентный слишком светлый для 4.5:1 */
+    --blue-text: #0A62F0;
+    --pill: #0A62F0;
+    /* Контур файла-заглушки: на --hairline он неразличим */
+    --mark: #8E8E96;
+    /* Плашка иконки непрозрачна, свечение видно только вокруг неё */
+    --glow-inset: 6%;
+    --glow-power: 45%;
+    --glow-blur: 46px;
+
+    --sans: -apple-system, "SF Pro Display", "SF Pro Text", ui-sans-serif, system-ui, sans-serif;
+    --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, monospace;
+
+    --shell: 1024px;
+    --text-width: 44ch;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --page: #000000;
+      --page-alt: #101012;
+      --ink: #F5F5F7;
+      --ink-2: #98989D;
+      --hairline: #2C2C2E;
+      --card: #1C1C1E;
+      --blue: #4C8DFF;
+      --violet: #C88CFF;
+      --link: #4C9BFF;
+      --blue-text: #6BA6FF;
+      --pill: #0A62F0;
+      --mark: #6E6E76;
+      --glow-inset: -10%;
+      --glow-power: 62%;
+      --glow-blur: 76px;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --page: #000000;
+    --page-alt: #101012;
+    --ink: #F5F5F7;
+    --ink-2: #98989D;
+    --hairline: #2C2C2E;
+    --card: #1C1C1E;
+    --blue: #4C8DFF;
+    --violet: #C88CFF;
+    --link: #4C9BFF;
+    --blue-text: #6BA6FF;
+    --pill: #0A62F0;
+    --mark: #6E6E76;
+    --glow-inset: -10%;
+    --glow-power: 62%;
+    --glow-blur: 76px;
+  }
+
+  /* Свои отступы — от нуля. Иначе поля браузера уводят полосы от краёв
+     окна, а margin заголовков схлопывается с заданными в CSS. */
+  body, h1, h2, h3, p, dl, dd, figure { margin: 0; }
+  dd { margin-inline-start: 0; }
+  *, *::before, *::after { box-sizing: border-box; }
+
+  body {
+    background: var(--page);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 17px;
+    line-height: 1.47;
+    letter-spacing: -0.012em;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .band { padding: 96px 22px; }
+  .band.alt { background: var(--page-alt); }
+  .shell { max-width: var(--shell); margin: 0 auto; }
+  .center { text-align: center; }
+
+  a { color: var(--link); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  a:focus-visible { outline: 2px solid var(--link); outline-offset: 4px; border-radius: 6px; }
+
+  /* ── Крупный набор в духе Apple: плотный трекинг, тугой интерлиньяж ── */
+  h1 {
+    font-size: clamp(2.75rem, 7vw, 5rem);
+    line-height: 1.05;
+    letter-spacing: -0.035em;
+    font-weight: 600;
+    text-wrap: balance;
+  }
+  h1 .tint {
+    background: linear-gradient(100deg, var(--blue), var(--violet));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  h2 {
+    font-size: clamp(2rem, 4.6vw, 3.1rem);
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    font-weight: 600;
+    text-wrap: balance;
+  }
+  h3 {
+    font-size: 1.32rem;
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+    font-weight: 600;
+  }
+  .lede {
+    font-size: clamp(1.2rem, 2.2vw, 1.45rem);
+    line-height: 1.4;
+    letter-spacing: -0.018em;
+    color: var(--ink-2);
+    max-width: 34ch;
+  }
+  .center .lede { margin-inline: auto; }
+  p { max-width: var(--text-width); }
+
+  .eyebrow {
+    font-size: 1.05rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--blue-text);
+    margin-bottom: 10px;
+  }
+
+  /* ── Шапка ─────────────────────────────────────────────── */
+  .bar {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    background: color-mix(in srgb, var(--page) 82%, transparent);
+    border-bottom: 1px solid var(--hairline);
+  }
+  .bar-inner {
+    max-width: var(--shell);
+    margin: 0 auto;
+    padding: 0 22px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 14px;
+  }
+  .bar strong { font-weight: 600; letter-spacing: -0.01em; }
+  .bar .spacer { flex: 1; }
+  .bar a { color: var(--ink); }
+
+  /* ── Первый экран ──────────────────────────────────────── */
+  .hero { padding: 72px 22px 0; text-align: center; }
+  .hero .lede { margin-top: 20px; margin-inline: auto; }
+
+  .actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 28px;
+    margin-top: 30px;
+    flex-wrap: wrap;
+    font-size: 1.1rem;
+  }
+  .pill {
+    background: var(--pill);
+    color: #FFFFFF;
+    padding: 11px 24px;
+    border-radius: 980px;
+    font-weight: 400;
+  }
+  .pill:hover { text-decoration: none; filter: brightness(1.08); }
+  .after { color: var(--ink-2); font-size: 0.85rem; letter-spacing: 0; }
+
+  .shot {
+    margin: 48px auto 0;
+    /* Третье ограничение — по высоте окна: иначе на невысоком экране
+       плашку срезает нижний край, и квадрат читается как вытянутый */
+    width: min(300px, 62vw, 34vh);
+    position: relative;
+  }
+  /* height: auto обязателен: атрибут height="600" иначе задаёт высоту
+     намертво, и картинка растягивается по вертикали */
+  .shot img { width: 100%; height: auto; display: block; position: relative; z-index: 1; }
+  /* Свечение из цветов иконки — единственный декоративный приём на странице */
+  .shot::after {
+    content: "";
+    position: absolute;
+    inset: var(--glow-inset);
+    background: radial-gradient(ellipse at center,
+                color-mix(in srgb, var(--blue) var(--glow-power), transparent), transparent 68%);
+    filter: blur(var(--glow-blur));
+    z-index: 0;
+  }
+
+  /* ── Окно Finder ───────────────────────────────────────── */
+  .window {
+    max-width: 860px;
+    margin: 0 auto;
+    background: var(--card);
+    border: 1px solid var(--hairline);
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 24px 60px -30px rgba(0, 0, 0, 0.45);
+  }
+  .window-bar {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--hairline);
+    background: var(--page-alt);
+  }
+  .dot { width: 11px; height: 11px; border-radius: 50%; background: var(--hairline); }
+  .window-bar span { margin-left: 10px; font-size: 13px; font-weight: 600; color: var(--ink-2); }
+
+  .row {
+    display: grid;
+    grid-template-columns: 24px 1fr auto auto;
+    align-items: center;
+    gap: 14px;
+    padding: 10px 20px;
+    font-size: 14px;
+  }
+  .row + .row { border-top: 1px solid color-mix(in srgb, var(--hairline) 60%, transparent); }
+  .row .name { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .row .size, .row .state {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--ink-2);
+    font-variant-numeric: tabular-nums;
+  }
+  .row .state { min-width: 116px; text-align: right; }
+  .row.here .state { color: var(--blue-text); }
+  .mark { width: 18px; height: 22px; display: block; }
+  .mark .body { fill: none; stroke: var(--mark); stroke-width: 1.5; stroke-dasharray: 3 2.5; }
+  .mark .core { fill: var(--blue); opacity: 0; transform-origin: 50% 100%; transform: scaleY(0.2); }
+  .row.here .mark .body { stroke: var(--blue); stroke-dasharray: none; }
+  .row.here .mark .core {
+    opacity: 0.18;
+    transform: scaleY(1);
+    transition: transform 0.55s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.45s ease;
+  }
+  /* Ниже этой ширины колонка размера съедает имя файла целиком */
+  @media (max-width: 540px) {
+    .row { grid-template-columns: 24px 1fr auto; }
+    .row .size { display: none; }
+  }
+
+  .note { margin: 22px auto 0; color: var(--ink-2); font-size: 15px; text-align: center; max-width: 46ch; }
+
+  /* ── Сетки ─────────────────────────────────────────────── */
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(15.5rem, 1fr));
+    gap: 26px;
+    margin-top: 54px;
+  }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--hairline);
+    border-radius: 18px;
+    padding: 28px;
+  }
+  .card p { color: var(--ink-2); font-size: 15.5px; margin-top: 14px; max-width: none; }
+
+  .steps { display: grid; gap: 34px; margin-top: 54px; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); }
+  .step .num {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--blue-text);
+    font-variant-numeric: tabular-nums;
+    margin-bottom: 8px;
+  }
+  .step p { color: var(--ink-2); font-size: 15.5px; margin-top: 6px; max-width: none; }
+
+  .facts { border-top: 1px solid var(--hairline); margin-top: 48px; }
+  .fact { display: grid; grid-template-columns: 15rem 1fr; gap: 28px; padding: 24px 0; border-bottom: 1px solid var(--hairline); }
+  .fact dt { font-weight: 600; letter-spacing: -0.018em; }
+  .fact dd { color: var(--ink-2); max-width: 52ch; }
+  @media (max-width: 640px) { .fact { grid-template-columns: 1fr; gap: 6px; } }
+
+  .specs { display: grid; grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr)); gap: 28px; margin-top: 48px; }
+  .spec dt { font-size: 13px; color: var(--ink-2); margin-bottom: 4px; }
+  .spec dd { font-size: 17px; font-weight: 500; font-variant-numeric: tabular-nums; }
+
+  footer {
+    background: var(--page-alt);
+    border-top: 1px solid var(--hairline);
+    padding: 34px 22px;
+    color: var(--ink-2);
+    font-size: 12px;
+    line-height: 1.6;
+  }
+  footer .shell { display: flex; flex-wrap: wrap; gap: 8px 26px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+  }
+</style>
+
+<div class="bar">
+  <div class="bar-inner">
+    <strong>Telepath</strong>
+    <div class="spacer"></div>
+    <a href="#what">Overview</a>
+    <a href="#limits">Limits</a>
+    <a href="https://github.com/sergey-lee/telepath/releases/latest">Download</a>
+  </div>
+</div>
+
+<div class="hero">
+  <div class="shell">
+    <h1>Your Telegram, <span class="tint">mounted in Finder.</span></h1>
+    <p class="lede">Unlimited storage that lives in your own account — and takes no space on your Mac until you open it.</p>
+    <div class="actions">
+      <a class="pill" href="https://github.com/sergey-lee/telepath/releases/latest">Download</a>
+      <span class="after">13 MB · macOS 14 or later · Apple silicon</span>
+    </div>
+    <div class="shot">
+      <img src="data:image/webp;base64,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" width="600" height="600"
+           alt="Telepath app icon: a blue cloud with a paper plane">
+    </div>
+  </div>
+</div>
+
+<div class="band" id="what">
+  <div class="shell center">
+    <div class="eyebrow">How it works</div>
+    <h2>A folder that isn't on your disk.</h2>
+    <p class="lede" style="margin-top:18px">Every file is listed. None is downloaded. Open one and it arrives — that is the whole trick.</p>
+  </div>
+
+  <div class="shell" style="margin-top:52px">
+    <div class="window">
+      <div class="window-bar">
+        <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+        <span>Saved Messages</span>
+      </div>
+      <div id="rows"></div>
+    </div>
+    <p class="note">Nothing is copied to your Mac in advance, so a 200 GB archive costs 200 GB in Telegram and nothing here.</p>
+  </div>
+</div>
+
+<div class="band alt">
+  <div class="shell">
+    <div class="center">
+      <div class="eyebrow">What you can do</div>
+      <h2>Everything you'd expect from a folder.</h2>
+    </div>
+    <div class="cards">
+      <div class="card">
+        <h3>Drag files in</h3>
+        <p>They upload to your Saved Messages and are waiting on your phone before you've finished making coffee.</p>
+      </div>
+      <div class="card">
+        <h3>Make folders</h3>
+        <p>Organize as you like. Telegram has no folders, so the location travels inside the message — your structure comes back on another Mac.</p>
+      </div>
+      <div class="card">
+        <h3>Open anything</h3>
+        <p>A file downloads the moment you open it, Quick Look included. Until then it takes no space at all.</p>
+      </div>
+      <div class="card">
+        <h3>Move a whole library</h3>
+        <p>Import folder queues an entire directory. The queue is written to disk, so quitting or rebooting doesn't lose your place.</p>
+      </div>
+      <div class="card">
+        <h3>Delete without fear</h3>
+        <p>Deleting moves a file to the trash, where it can be restored. Only emptying the trash touches Telegram.</p>
+      </div>
+      <div class="card">
+        <h3>Cap the cache</h3>
+        <p>Set a ceiling between 1 and 50 GB. Older copies are dropped when it's reached; the originals stay in Telegram.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="band">
+  <div class="shell">
+    <div class="center">
+      <div class="eyebrow">Getting started</div>
+      <h2>Three steps. There is no fourth.</h2>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="num">01</div>
+        <h3>Drag to Applications</h3>
+        <p>Signed and notarized by Apple, so it opens without warnings.</p>
+      </div>
+      <div class="step">
+        <div class="num">02</div>
+        <h3>Sign in to Telegram</h3>
+        <p>Your number, the code Telegram sends, and your two-step password if you use one.</p>
+      </div>
+      <div class="step">
+        <div class="num">03</div>
+        <h3>Press Connect cloud</h3>
+        <p>The folder appears in the Finder sidebar under Locations.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="band alt" id="limits">
+  <div class="shell">
+    <div class="center">
+      <div class="eyebrow">Straight answers</div>
+      <h2>What it doesn't do.</h2>
+      <p class="lede" style="margin-top:18px">Cheaper to say now than to refund later.</p>
+    </div>
+    <dl class="facts">
+      <div class="fact">
+        <dt>One file, up to 2 GB</dt>
+        <dd>Or 4 GB with Telegram Premium. The total is not limited — only the size of a single file.</dd>
+      </div>
+      <div class="fact">
+        <dt>Folders can't be renamed</dt>
+        <dd>A folder's name is part of the path stored inside every file it holds, so renaming one would mean rewriting hundreds of messages. Make a new folder and move the files across.</dd>
+      </div>
+      <div class="fact">
+        <dt>Other chats stay read-only</dt>
+        <dd>Writing is allowed only to Saved Messages, so a slip of the hand in Finder can't post anything into a group chat.</dd>
+      </div>
+      <div class="fact">
+        <dt>Everything you upload is visible in Telegram</dt>
+        <dd>It lands in Saved Messages on all your devices. Usually the point — but worth knowing before you move a private archive there.</dd>
+      </div>
+      <div class="fact">
+        <dt>Uploads are unhurried on purpose</dt>
+        <dd>Telegram rate-limits accounts that hammer its API. A slow copy is a much better outcome than a blocked account.</dd>
+      </div>
+    </dl>
+  </div>
+</div>
+
+<div class="band">
+  <div class="shell center">
+    <div class="eyebrow">Privacy</div>
+    <h2>There is no Telepath server.</h2>
+    <p class="lede" style="margin-top:18px">The app talks to Telegram directly, the same way the official client does.</p>
+    <p style="margin:26px auto 0; color:var(--ink-2); max-width:52ch; text-align:left">
+      Your files sit in your own account. The session, the file index and the cache live in the app's
+      container on your Mac and nowhere else — no relay, no telemetry. Disconnect and delete data
+      removes the folder, signs you out and erases all of it locally, and leaves every message in
+      Telegram exactly where it was.
+    </p>
+  </div>
+</div>
+
+<div class="band alt">
+  <div class="shell">
+    <div class="center">
+      <div class="eyebrow">Requirements</div>
+      <h2>What you need.</h2>
+    </div>
+    <dl class="specs">
+      <div class="spec"><dt>macOS</dt><dd>14 Sonoma or later</dd></div>
+      <div class="spec"><dt>Mac</dt><dd>Apple silicon</dd></div>
+      <div class="spec"><dt>Account</dt><dd>Any Telegram account</dd></div>
+      <div class="spec"><dt>Download</dt><dd>13 MB · 34 MB installed</dd></div>
+    </dl>
+  </div>
+</div>
+
+<footer>
+  <div class="shell">
+    <span>Telepath 1.0</span>
+    <span>Updates arrive in the app</span>
+    <a href="https://github.com/sergey-lee/telepath/issues">Support</a>
+    <span>Not affiliated with Telegram.</span>
+  </div>
+</footer>
+
+<script>
+  const files = [
+    { name: "Barcelona 2026", size: "—", state: "folder", folder: true },
+    { name: "IMG_4417.heic", size: "3.4 MB" },
+    { name: "Lease agreement.pdf", size: "820 KB" },
+    { name: "Studio session.mov", size: "203 MB" },
+    { name: "Taxes 2025.zip", size: "44 MB" }
+  ];
+
+  const sheet = `<svg class="mark" viewBox="0 0 18 22" aria-hidden="true">
+      <rect class="core" x="1.5" y="1.5" width="15" height="19" rx="2.5"></rect>
+      <rect class="body" x="1.5" y="1.5" width="15" height="19" rx="2.5"></rect>
+    </svg>`;
+  const folder = `<svg class="mark" viewBox="0 0 18 22" aria-hidden="true">
+      <path class="body" d="M1.5 5.5h5l1.6 2h8.4v11h-15z" stroke-dasharray="none"></path>
+    </svg>`;
+
+  document.getElementById("rows").innerHTML = files.map(file => `
+    <div class="row${file.here ? " here" : ""}">
+      ${file.folder ? folder : sheet}
+      <div class="name">${file.name}</div>
+      <div class="size">${file.size}</div>
+      <div class="state">${file.state || (file.here ? "on this Mac" : "in Telegram")}</div>
+    </div>`).join("");
+
+  // Приезжает ровно один файл — тот, который «открыли». Если бы приехали все,
+  // страница опровергала бы главное: на диске лежит только открытое.
+  if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    const rows = [...document.querySelectorAll(".row")];
+    const opened = rows.find(row => row.querySelector(".name").textContent === "Studio session.mov");
+    const state = opened.querySelector(".state");
+    const play = () => {
+      setTimeout(() => { state.textContent = "downloading…"; }, 900);
+      setTimeout(() => {
+        opened.classList.add("here");
+        state.textContent = "on this Mac";
+      }, 2300);
+    };
+    new IntersectionObserver((entries, observer) => {
+      if (entries.some(entry => entry.isIntersecting)) {
+        play();
+        observer.disconnect();
+      }
+    }, { threshold: 0.5 }).observe(opened);
+  }
+</script>
+
+</body></html>
