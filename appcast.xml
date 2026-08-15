@@ -3,6 +3,32 @@
     <channel>
         <title>Telepath</title>
         <item>
+            <title>1.0.10</title>
+            <pubDate>Sat, 15 Aug 2026 23:32:35 +0900</pubDate>
+            <sparkle:version>12</sparkle:version>
+            <sparkle:shortVersionString>1.0.10</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+            <sparkle:hardwareRequirements>arm64</sparkle:hardwareRequirements>
+            <description><![CDATA[<style>
+  body { font: 13px -apple-system, system-ui, sans-serif; color: #1d1d1f; margin: 0; }
+  /* Диалог Sparkle красится в тему системы, фон нам не принадлежит:
+     без светлого текста в тёмной теме заметки — чёрное на чёрном */
+  @media (prefers-color-scheme: dark) { body { color: #f5f5f7; } }
+  h3 { font-size: 14px; margin: 0 0 8px; }
+  ul { margin: 0; padding-left: 18px; }
+  li { margin-bottom: 6px; }
+</style>
+<h3>Version 1.0.10</h3>
+<ul>
+  <li>When an update has been downloaded and is waiting, the main window now
+      says so — with a Restart Now button. Previously a quietly downloaded
+      update could wait for weeks behind an app that was never quit.</li>
+  <li>Release notes are now readable in dark mode.</li>
+</ul>
+]]></description>
+            <enclosure url="https://github.com/sergey-lee/telepath/releases/download/v1.0.10/Telepath-1.0.10.dmg" length="13223928" type="application/octet-stream" sparkle:edSignature="70ivYPJ8i1dYjA+vM4caC7rfcyeHxbBzyKvjMuahaMF4ADo4GUXoNY0HyYdScXrqo1iZV3dHbrERVkR0xMVaBg=="/>
+        </item>
+        <item>
             <title>1.0.9</title>
             <pubDate>Sat, 15 Aug 2026 22:53:45 +0900</pubDate>
             <sparkle:version>11</sparkle:version>
@@ -58,32 +84,6 @@
 </ul>
 ]]></description>
             <enclosure url="https://github.com/sergey-lee/telepath/releases/download/v1.0.8/Telepath-1.0.8.dmg" length="13215456" type="application/octet-stream" sparkle:edSignature="Fp+fz5Y5znPYXuTlaNwBQg6VhYqS7EVvu5NgN2gPwJncfNhV/Kz/RAuNl5wlFxT3dlXSG82pdTgxKDf6y49SAw=="/>
-        </item>
-        <item>
-            <title>1.0.7</title>
-            <pubDate>Sat, 15 Aug 2026 20:28:42 +0900</pubDate>
-            <sparkle:version>9</sparkle:version>
-            <sparkle:shortVersionString>1.0.7</sparkle:shortVersionString>
-            <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
-            <sparkle:hardwareRequirements>arm64</sparkle:hardwareRequirements>
-            <description><![CDATA[<style>
-  body { font: 13px -apple-system, system-ui, sans-serif; color: #1d1d1f; margin: 0; }
-  /* Диалог Sparkle красится в тему системы, фон нам не принадлежит:
-     без светлого текста в тёмной теме заметки — чёрное на чёрном */
-  @media (prefers-color-scheme: dark) { body { color: #f5f5f7; } }
-  h3 { font-size: 14px; margin: 0 0 8px; }
-  ul { margin: 0; padding-left: 18px; }
-  li { margin-bottom: 6px; }
-</style>
-<h3>Version 1.0.7</h3>
-<ul>
-  <li>Fixed a memory leak that showed up when importing large libraries —
-      memory now stays flat instead of growing with every file.</li>
-  <li>Uploading a few thousand files no longer slows down as it goes.</li>
-  <li>The diagnostics report can now include a memory breakdown.</li>
-</ul>
-]]></description>
-            <enclosure url="https://github.com/sergey-lee/telepath/releases/download/v1.0.7/Telepath-1.0.7.dmg" length="13171439" type="application/octet-stream" sparkle:edSignature="tqH1Z5hHWU4ovdXyj1Gk6V3Z7O3twlyMCv6WPJfMO4sAKjhtsTxCuyX6N80ObekwnuR28cYVByFlhG+CEoKOBg=="/>
         </item>
     </channel>
 </rss>
