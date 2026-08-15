@@ -3,6 +3,15 @@
     <channel>
         <title>Telepath</title>
         <item>
+            <title>1.0.3</title>
+            <pubDate>Sat, 15 Aug 2026 13:07:53 +0900</pubDate>
+            <sparkle:version>5</sparkle:version>
+            <sparkle:shortVersionString>1.0.3</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+            <sparkle:hardwareRequirements>arm64</sparkle:hardwareRequirements>
+            <enclosure url="https://github.com/sergey-lee/telepath/releases/download/v1.0.3/Telepath-1.0.3.dmg" length="13137725" type="application/octet-stream" sparkle:edSignature="dLnz5CS5yqCPP3qr87HdD5FnXhlEADIl7PBcyGrVD/ziQmzbTYteqH21HEhUu7La556v0P7DIwh+fyR/ydFgAA=="/>
+        </item>
+        <item>
             <title>1.0.2</title>
             <pubDate>Sat, 15 Aug 2026 12:44:02 +0900</pubDate>
             <sparkle:version>4</sparkle:version>
@@ -19,15 +28,6 @@
             <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
             <sparkle:hardwareRequirements>arm64</sparkle:hardwareRequirements>
             <enclosure url="https://github.com/sergey-lee/telepath/releases/download/v1.0.1/Telepath-1.0.1.dmg" length="13120997" type="application/octet-stream" sparkle:edSignature="ZLV5gnTqSLOq3bdK50ygvpg23QFCcilupL06DSqoAjkm4jNmRvcJfASPOYiHpJjGQNu/MyD0Pq98NEik0fGYDQ=="/>
-        </item>
-        <item>
-            <title>1.0</title>
-            <pubDate>Sat, 15 Aug 2026 08:44:28 +0900</pubDate>
-            <sparkle:version>2</sparkle:version>
-            <sparkle:shortVersionString>1.0</sparkle:shortVersionString>
-            <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
-            <sparkle:hardwareRequirements>arm64</sparkle:hardwareRequirements>
-            <enclosure url="https://github.com/sergey-lee/telepath/releases/download/v1.0/Telepath-1.0.dmg" length="13123271" type="application/octet-stream" sparkle:edSignature="D8LI3B1QCEQkMnC2x2DY1hNaRIsywVZUKoGWU3d3FuanLwekkbjUYmei1QtDpB0DuyeMu7B04wcMNGMaC127CA=="/>
         </item>
     </channel>
 </rss>
