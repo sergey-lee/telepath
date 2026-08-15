@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Privacy — Telepath</title>
+<style>
+  :root {
+    --page: #FFFFFF; --page-alt: #F5F5F7; --ink: #1D1D1F; --ink-2: #6E6E73;
+    --hairline: #D2D2D7; --blue: #1F6BFF; --link: #0A62F0;
+    --sans: -apple-system, "SF Pro Display", "SF Pro Text", ui-sans-serif, system-ui, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --page: #000; --page-alt: #101012; --ink: #F5F5F7; --ink-2: #98989D;
+      --hairline: #2C2C2E; --blue: #4C8DFF; --link: #4C9BFF;
+    }
+  }
+  :root[data-theme="dark"] {
+    --page: #000; --page-alt: #101012; --ink: #F5F5F7; --ink-2: #98989D;
+    --hairline: #2C2C2E; --blue: #4C8DFF; --link: #4C9BFF;
+  }
+  body, h1, h2, p, ul, li { margin: 0; }
+  *, *::before, *::after { box-sizing: border-box; }
+  body {
+    background: var(--page); color: var(--ink); font-family: var(--sans);
+    font-size: 17px; line-height: 1.5; letter-spacing: -0.012em;
+    -webkit-font-smoothing: antialiased; padding: 88px 22px;
+  }
+  .shell { max-width: 40rem; margin: 0 auto; }
+  h1 {
+    font-size: clamp(2.2rem, 5vw, 3rem); line-height: 1.08;
+    letter-spacing: -0.03em; font-weight: 600;
+  }
+  .lede { font-size: 1.2rem; color: var(--ink-2); margin-top: 16px; max-width: 34ch; }
+  h2 {
+    font-size: 1.25rem; font-weight: 600; letter-spacing: -0.02em;
+    margin-top: 44px; padding-top: 22px; border-top: 1px solid var(--hairline);
+  }
+  p { margin-top: 12px; color: var(--ink-2); max-width: 60ch; }
+  p strong { color: var(--ink); font-weight: 600; }
+  ul { margin-top: 12px; padding-left: 1.1rem; color: var(--ink-2); max-width: 60ch; }
+  li { margin-top: 8px; }
+  a { color: var(--link); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .date { margin-top: 40px; font-size: 13.5px; color: var(--ink-2); }
+  footer {
+    margin-top: 48px; padding-top: 22px; border-top: 1px solid var(--hairline);
+    font-size: 13.5px; color: var(--ink-2); display: flex; gap: 24px; flex-wrap: wrap;
+  }
+</style>
+</head>
+<body>
+<div class="shell">
+  <h1>Privacy</h1>
+  <p class="lede">Short version: your files never touch us, because there is nothing of ours for them to touch.</p>
+
+  <h2>There is no Telepath server</h2>
+  <p>
+    The app talks to Telegram directly, the same way the official client does, using
+    <strong>TDLib</strong> — Telegram's own client library. Your files, your messages
+    and your Telegram session stay between your Mac and Telegram. We operate no
+    servers, no relay and no analytics, so there is no place where your data could
+    accumulate on our side.
+  </p>
+
+  <h2>What stays on your Mac</h2>
+  <ul>
+    <li>Your Telegram session, in the app's own container.</li>
+    <li>An index of your files — names, sizes and dates — in a local database, so
+      Finder can list them without asking Telegram every time.</li>
+    <li>Copies of files you have opened, until the cache limit you set drops them.</li>
+    <li>Your licence key, in the macOS Keychain.</li>
+  </ul>
+  <p>
+    <strong>Disconnect and delete data</strong> in the app erases all of it. Your
+    messages and files in Telegram are left untouched — deleting an app must never
+    delete an archive.
+  </p>
+
+  <h2>What leaves your Mac, and to whom</h2>
+  <p>
+    Two things, and nothing else:
+  </p>
+  <ul>
+    <li><strong>Telegram</strong> receives what you would send it anyway: your sign-in,
+      your file requests, and the files you choose to store. Their
+      <a href="https://telegram.org/privacy">privacy policy</a> applies.</li>
+    <li><strong>Polar</strong>, our payment provider, receives your purchase details
+      when you buy, and your licence key when the app checks it is still valid. With
+      that check the app sends a <strong>salted hash</strong> of your Telegram user
+      id — an opaque string. It lets the licence follow your account instead of your
+      computer; it cannot be turned back into your account, and Polar never learns
+      whose Telegram it belongs to.</li>
+  </ul>
+  <p>
+    The app also asks GitHub for the update feed when it checks for a new version.
+    That request contains no identifier of you.
+  </p>
+
+  <h2>Refunds</h2>
+  <p>
+    Polar acts as the merchant of record and handles refunds. If Telepath is not what
+    you expected, write to <a href="https://github.com/sergey-lee/telepath/issues">support</a>
+    within 14 days of purchase and you will get your money back. The 7-day trial exists
+    so that this rarely has to happen — it is the same app, unrestricted.
+  </p>
+
+  <h2>Diagnostics</h2>
+  <p>
+    The report the app can save for support contains version numbers, service states
+    and counters. File names and chat titles are deliberately excluded — a product
+    sold on privacy has no business asking you to send a list of your files. Nothing
+    is sent anywhere unless you attach the report yourself.
+  </p>
+
+  <p class="date">Last updated 15 August 2026. Telepath is not affiliated with or endorsed by Telegram.</p>
+
+  <footer>
+    <a href="/">Telepath</a>
+    <a href="https://github.com/sergey-lee/telepath/issues">Support</a>
+  </footer>
+</div>
+</body>
+</html>
