@@ -3,6 +3,29 @@
     <channel>
         <title>Telepath</title>
         <item>
+            <title>1.0.6</title>
+            <pubDate>Sat, 15 Aug 2026 14:49:40 +0900</pubDate>
+            <sparkle:version>8</sparkle:version>
+            <sparkle:shortVersionString>1.0.6</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+            <sparkle:hardwareRequirements>arm64</sparkle:hardwareRequirements>
+            <description><![CDATA[<style>
+  body { font: 13px -apple-system, system-ui, sans-serif; color: #1d1d1f; margin: 0; }
+  h3 { font-size: 14px; margin: 0 0 8px; }
+  ul { margin: 0; padding-left: 18px; }
+  li { margin-bottom: 6px; }
+</style>
+<h3>Version 1.0.6</h3>
+<ul>
+  <li>Deleting many files at once is now much faster — messages are removed in
+      batches instead of one at a time.</li>
+  <li>When something is refused, Finder no longer keeps a stale view of the folder.</li>
+  <li>Lower memory use when working with large libraries.</li>
+</ul>
+]]></description>
+            <enclosure url="https://github.com/sergey-lee/telepath/releases/download/v1.0.6/Telepath-1.0.6.dmg" length="13160470" type="application/octet-stream" sparkle:edSignature="bBRmi2x4I+ZmsidFvYYiLUCD/sp/JlFsTSWkAnGhZRspHEElCthuuqHPKYPNAE26ZadKlTSImMwBJ3AWVdl/Bw=="/>
+        </item>
+        <item>
             <title>1.0.5</title>
             <pubDate>Sat, 15 Aug 2026 13:34:07 +0900</pubDate>
             <sparkle:version>7</sparkle:version>
@@ -48,15 +71,6 @@
 </ul>
 ]]></description>
             <enclosure url="https://github.com/sergey-lee/telepath/releases/download/v1.0.4/Telepath-1.0.4.dmg" length="13138560" type="application/octet-stream" sparkle:edSignature="+oHZc1rLgJ/RXLqGXIgnVse2can344d5PirhlWOKPOwgM7Iq6Zi0L8qfUNuo1p3NtTSC7J2JVx7CY5sxrQWMCg=="/>
-        </item>
-        <item>
-            <title>1.0.3</title>
-            <pubDate>Sat, 15 Aug 2026 13:07:53 +0900</pubDate>
-            <sparkle:version>5</sparkle:version>
-            <sparkle:shortVersionString>1.0.3</sparkle:shortVersionString>
-            <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
-            <sparkle:hardwareRequirements>arm64</sparkle:hardwareRequirements>
-            <enclosure url="https://github.com/sergey-lee/telepath/releases/download/v1.0.3/Telepath-1.0.3.dmg" length="13137725" type="application/octet-stream" sparkle:edSignature="dLnz5CS5yqCPP3qr87HdD5FnXhlEADIl7PBcyGrVD/ziQmzbTYteqH21HEhUu7La556v0P7DIwh+fyR/ydFgAA=="/>
         </item>
     </channel>
 </rss>
