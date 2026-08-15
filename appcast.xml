@@ -3,6 +3,29 @@
     <channel>
         <title>Telepath</title>
         <item>
+            <title>1.0.7</title>
+            <pubDate>Sat, 15 Aug 2026 20:28:42 +0900</pubDate>
+            <sparkle:version>9</sparkle:version>
+            <sparkle:shortVersionString>1.0.7</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+            <sparkle:hardwareRequirements>arm64</sparkle:hardwareRequirements>
+            <description><![CDATA[<style>
+  body { font: 13px -apple-system, system-ui, sans-serif; color: #1d1d1f; margin: 0; }
+  h3 { font-size: 14px; margin: 0 0 8px; }
+  ul { margin: 0; padding-left: 18px; }
+  li { margin-bottom: 6px; }
+</style>
+<h3>Version 1.0.7</h3>
+<ul>
+  <li>Fixed a memory leak that showed up when importing large libraries —
+      memory now stays flat instead of growing with every file.</li>
+  <li>Uploading a few thousand files no longer slows down as it goes.</li>
+  <li>The diagnostics report can now include a memory breakdown.</li>
+</ul>
+]]></description>
+            <enclosure url="https://github.com/sergey-lee/telepath/releases/download/v1.0.7/Telepath-1.0.7.dmg" length="13171439" type="application/octet-stream" sparkle:edSignature="tqH1Z5hHWU4ovdXyj1Gk6V3Z7O3twlyMCv6WPJfMO4sAKjhtsTxCuyX6N80ObekwnuR28cYVByFlhG+CEoKOBg=="/>
+        </item>
+        <item>
             <title>1.0.6</title>
             <pubDate>Sat, 15 Aug 2026 14:49:40 +0900</pubDate>
             <sparkle:version>8</sparkle:version>
@@ -48,29 +71,6 @@
 </ul>
 ]]></description>
             <enclosure url="https://github.com/sergey-lee/telepath/releases/download/v1.0.5/Telepath-1.0.5.dmg" length="13162691" type="application/octet-stream" sparkle:edSignature="htiZcNCwimMNg2CVOqwG9vBEczmeIMox4rCA7Q8PBpEcaRDL+OeT/+WimllGLocPhGCQQYyrokNcheS1v0IoCw=="/>
-        </item>
-        <item>
-            <title>1.0.4</title>
-            <pubDate>Sat, 15 Aug 2026 13:15:21 +0900</pubDate>
-            <sparkle:version>6</sparkle:version>
-            <sparkle:shortVersionString>1.0.4</sparkle:shortVersionString>
-            <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
-            <sparkle:hardwareRequirements>arm64</sparkle:hardwareRequirements>
-            <description><![CDATA[<style>
-  body { font: 13px -apple-system, system-ui, sans-serif; color: #1d1d1f; margin: 0; }
-  h3 { font-size: 14px; margin: 0 0 8px; }
-  ul { margin: 0; padding-left: 18px; }
-  li { margin-bottom: 6px; }
-</style>
-<h3>Version 1.0.4</h3>
-<ul>
-  <li>The licence now follows your Telegram account instead of a particular Mac.
-      Reinstall the system or move to a new computer — sign in and it keeps working.</li>
-  <li>The licence is kept in the Keychain, so it survives reinstalling the app.</li>
-  <li>Clearer wording when a key belongs to a different Telegram account.</li>
-</ul>
-]]></description>
-            <enclosure url="https://github.com/sergey-lee/telepath/releases/download/v1.0.4/Telepath-1.0.4.dmg" length="13138560" type="application/octet-stream" sparkle:edSignature="+oHZc1rLgJ/RXLqGXIgnVse2can344d5PirhlWOKPOwgM7Iq6Zi0L8qfUNuo1p3NtTSC7J2JVx7CY5sxrQWMCg=="/>
         </item>
     </channel>
 </rss>
