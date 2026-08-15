@@ -3,6 +3,18 @@
     <channel>
         <title>Telepath</title>
         <item>
+            <title>1.0.1</title>
+            <pubDate>Sat, 15 Aug 2026 12:26:57 +0900</pubDate>
+            <sparkle:version>3</sparkle:version>
+            <sparkle:shortVersionString>1.0.1</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+            <sparkle:hardwareRequirements>arm64</sparkle:hardwareRequirements>
+            <enclosure url="https://github.com/sergey-lee/telepath/releases/download/v1.0.1/Telepath-1.0.1.dmg" length="13120997" type="application/octet-stream" sparkle:edSignature="ZLV5gnTqSLOq3bdK50ygvpg23QFCcilupL06DSqoAjkm4jNmRvcJfASPOYiHpJjGQNu/MyD0Pq98NEik0fGYDQ=="/>
+            <sparkle:deltas>
+                <enclosure url="https://github.com/sergey-lee/telepath/releases/download/v1.0.1/Telepath3-2.delta" sparkle:deltaFrom="2" length="50014" type="application/octet-stream" sparkle:deltaFromSparkleExecutableSize="977808" sparkle:deltaFromSparkleLocales="de,he,ar,el,ja,fa,uk" sparkle:edSignature="HnPo6bE+D5ZA+W1w3RmJ9zOOVzvchWg+Bq5VPZS/zC00NvQYUMjjysih7o6y35euxoIjBPAT9hhsrGxJXzWwAg=="/>
+            </sparkle:deltas>
+        </item>
+        <item>
             <title>1.0</title>
             <pubDate>Sat, 15 Aug 2026 08:44:28 +0900</pubDate>
             <sparkle:version>2</sparkle:version>
